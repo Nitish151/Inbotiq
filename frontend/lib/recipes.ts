@@ -68,3 +68,12 @@ export const recipeService = {
     return response.data;
   }
 };
+
+// Export individual functions for convenience
+export const getRecipes = recipeService.getRecipes;
+export const getRecipeById = recipeService.getRecipeById;
+export const createRecipe = recipeService.createRecipe;
+export const updateRecipe = recipeService.updateRecipe;
+export const deleteRecipe = recipeService.deleteRecipe;
+export const toggleFeatured = recipeService.toggleFeatured;
+export const getRecipeStats = recipeService.getRecipeStats;

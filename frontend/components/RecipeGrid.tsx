@@ -50,7 +50,8 @@ export default function RecipeGrid({ recipes, onEdit, onDelete, onToggleFeatured
         return (
           <div
             key={recipe._id}
-            className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group relative"
+            className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group relative cursor-pointer"
+            onClick={() => window.location.href = `/recipes/${recipe._id}`}
           >
             {/* Featured Badge */}
             {recipe.isFeatured && (
@@ -136,14 +137,20 @@ export default function RecipeGrid({ recipes, onEdit, onDelete, onToggleFeatured
               {/* Actions */}
               <div className="flex gap-2">
                 <button
-                  onClick={() => onEdit(recipe)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onEdit(recipe);
+                  }}
                   className="flex-1 px-3 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors flex items-center justify-center gap-2 text-sm font-medium"
                 >
                   <Edit2 size={16} />
                   Edit
                 </button>
                 <button
-                  onClick={() => onDelete(recipe._id)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onDelete(recipe._id);
+                  }}
                   className="flex-1 px-3 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors flex items-center justify-center gap-2 text-sm font-medium"
                 >
                   <Trash2 size={16} />
@@ -151,7 +158,10 @@ export default function RecipeGrid({ recipes, onEdit, onDelete, onToggleFeatured
                 </button>
                 {isAdmin && onToggleFeatured && (
                   <button
-                    onClick={() => onToggleFeatured(recipe._id)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onToggleFeatured(recipe._id);
+                    }}
                     className={`px-3 py-2 rounded-lg transition-colors flex items-center justify-center ${
                       recipe.isFeatured
                         ? 'bg-yellow-100 text-yellow-700 hover:bg-yellow-200'
