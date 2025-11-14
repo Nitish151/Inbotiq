@@ -6,14 +6,14 @@ import { Recipe } from '@/types';
 import { getRecipeById } from '@/lib/recipes';
 import { Clock, Users, ChefHat, ArrowLeft, Award } from 'lucide-react';
 
-const difficultyConfig = {
+const difficultyConfig: Record<'easy' | 'medium' | 'hard' | 'expert', { color: string; icon: string; label: string }> = {
   easy: { color: 'bg-green-100 text-green-800 border-green-300', icon: '🌱', label: 'Easy' },
   medium: { color: 'bg-yellow-100 text-yellow-800 border-yellow-300', icon: '📌', label: 'Medium' },
   hard: { color: 'bg-orange-100 text-orange-800 border-orange-300', icon: '⚡', label: 'Hard' },
   expert: { color: 'bg-red-100 text-red-800 border-red-300', icon: '👨‍🍳', label: 'Expert' }
 };
 
-const categoryConfig = {
+const categoryConfig: Record<'breakfast' | 'lunch' | 'dinner' | 'dessert' | 'snack' | 'beverage', { icon: string; label: string }> = {
   breakfast: { icon: '🍳', label: 'Breakfast' },
   lunch: { icon: '🥗', label: 'Lunch' },
   dinner: { icon: '🍽️', label: 'Dinner' },
@@ -33,8 +33,8 @@ export default function RecipeDetailPage() {
     const fetchRecipe = async () => {
       try {
         setLoading(true);
-        const data = await getRecipeById(params.id as string);
-        setRecipe(data);
+        const response = await getRecipeById(params.id as string);
+        setRecipe(response.recipe || null);
       } catch (err: any) {
         setError(err.response?.data?.message || 'Failed to load recipe');
       } finally {
@@ -74,8 +74,10 @@ export default function RecipeDetailPage() {
     );
   }
 
-  const difficulty = difficultyConfig[recipe.difficulty] || difficultyConfig.easy;
-  const category = categoryConfig[recipe.category] || categoryConfig.dinner;
+  const difficultyKey = (recipe.difficulty as keyof typeof difficultyConfig) ?? 'easy';
+  const difficulty = difficultyConfig[difficultyKey] || difficultyConfig.easy;
+  const categoryKey = (recipe.category as keyof typeof categoryConfig) ?? 'dinner';
+  const category = categoryConfig[categoryKey] || categoryConfig.dinner;
   const totalTime = recipe.prepTime + recipe.cookTime;
   const userName = typeof recipe.userId === 'object' ? recipe.userId.name : '';
 
