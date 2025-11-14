@@ -2,6 +2,8 @@
 
 Production-ready recipe management app with JWT authentication, role-based access control, and complete CRUD operations.
 
+**🚀 Live Demo:** [https://inbotiq-virid.vercel.app/](https://inbotiq-virid.vercel.app/)
+
 **Tech Stack:** Next.js 14 · Express · TypeScript · MongoDB · TailwindCSS
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue)](https://www.typescriptlang.org/)
